@@ -1,0 +1,118 @@
+
+bunny.png
+size: 1456,392
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+GUN/gun_all
+  rotate: false
+  xy: 483, 3
+  size: 440, 131
+  orig: 1920, 1080
+  offset: 75, 209
+  index: -1
+GUN/gun_dulo
+  rotate: false
+  xy: 1348, 10
+  size: 25, 93
+  orig: 1920, 1080
+  offset: 499, 247
+  index: -1
+body
+  rotate: true
+  xy: 483, 137
+  size: 252, 243
+  orig: 377, 477
+  offset: 89, 35
+  index: -1
+bush
+  rotate: true
+  xy: 1156, 187
+  size: 202, 172
+  orig: 202, 172
+  offset: 0, 0
+  index: -1
+coin
+  rotate: true
+  xy: 729, 158
+  size: 231, 221
+  orig: 231, 221
+  offset: 0, 0
+  index: -1
+eye
+  rotate: true
+  xy: 1376, 48
+  size: 55, 56
+  orig: 377, 477
+  offset: 232, 357
+  index: -1
+head
+  rotate: false
+  xy: 953, 174
+  size: 200, 215
+  orig: 377, 477
+  offset: 152, 262
+  index: -1
+hvost
+  rotate: false
+  xy: 1039, 14
+  size: 87, 157
+  orig: 377, 477
+  offset: 31, 45
+  index: -1
+left_hand
+  rotate: true
+  xy: 1129, 26
+  size: 145, 107
+  orig: 377, 477
+  offset: 232, 138
+  index: -1
+left_lag
+  rotate: true
+  xy: 1348, 106
+  size: 81, 95
+  orig: 377, 477
+  offset: 149, 0
+  index: -1
+mouth
+  rotate: true
+  xy: 1415, 226
+  size: 51, 31
+  orig: 377, 477
+  offset: 300, 304
+  index: -1
+nose
+  rotate: true
+  xy: 3, 12
+  size: 377, 477
+  orig: 377, 477
+  offset: 0, 0
+  index: -1
+right_hand
+  rotate: true
+  xy: 926, 10
+  size: 145, 110
+  orig: 377, 477
+  offset: 170, 121
+  index: -1
+right_lag
+  rotate: false
+  xy: 1331, 190
+  size: 81, 87
+  orig: 377, 477
+  offset: 225, 7
+  index: -1
+sheka
+  rotate: false
+  xy: 1331, 280
+  size: 122, 109
+  orig: 377, 477
+  offset: 201, 285
+  index: -1
+yho
+  rotate: true
+  xy: 1239, 11
+  size: 173, 106
+  orig: 377, 477
+  offset: 0, 347
+  index: -1

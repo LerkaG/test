@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PlayCanvas Spine - Hero</title>
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+   
+    <script src="https://code.playcanvas.com/playcanvas-stable.js"></script>
+  	<!-- <script src="bg.js"></script> -->
+
+    <style>
+      body.unscroll {
+        overflow: hidden;
+      }
+      body { 
+        margin: 0;        
+        width: 100%;
+        height: auto;
+      }
+
+      #application {
+        /* position: absolute; */
+      }
+    </style>
+</head>
+
+<body class="body unscroll">
+  <!-- The canvas element -->
+  <button id ="btn_next"> Click Me</button>
+  <canvas id="application"></canvas>
+  <canvas id="application2"></canvas>
+  
+
+  <!-- The script -->
+  <script>
+    var canvas = document.getElementById("application");
+
+    // Create the application and start the update loop
+    var app = new pc.Application(canvas, {
+      mouse: new pc.Mouse(canvas),
+      keyboard: new pc.Keyboard(window)
+    });
+    app.start();
+
+    // Set the canvas to fill the window and automatically change resolution to be the same as the canvas size
+    app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
+    document.getElementById("application").style.width = "90%";
+    document.getElementById("application").style.height = "90%";
+
+    app.setCanvasResolution(pc.RESOLUTION_AUTO);
+
+    window.addEventListener("resize", function () {
+      app.resizeCanvas(canvas.width, canvas.height);
+    });
+
+
+    var assets = [
+      new pc.Asset("playcanvas-spine.3.8.js", "script", { url: "../lib/playcanvas-spine.3.8.js" }),
+      new pc.Asset("bunny.atlas", "text", { url: "data/bunny.atlas" }),
+      new pc.Asset("bunny.json", "json", { url: "data/bunny.json" }),
+      new pc.Asset("bunny.png", "texture", { url: "data/bunny.png" }),
+      new pc.Asset("bg.atlas", "text", { url: "data/bg.atlas" }),
+      new pc.Asset("bg.json", "json", { url: "data/bg.json" }),
+      new pc.Asset("bg.png", "texture", { url: "data/bg.png" }),
+      new pc.Asset("bg2.png", "texture", { url: "data/bg2.png" })
+    ];
+
+
+    var preload = function (assets, callback) {
+      var count = 0;
+
+      for (var i = 0; i < assets.length; i++) {
+        app.assets.add(assets[i]);
+        assets[i].ready(function (asset) {
+          count++;
+          if (count === assets.length) {
+            callback();
+          }
+        });
+        app.assets.load(assets[i]);
+      }
+    };
+
+    preload(assets, function () {
+      // Control script for the hero character
+      var HeroControls = pc.createScript("heroControls");
+
+      HeroControls.prototype.initialize = function () {
+          this.state = "idle";
+      };
+
+      HeroControls.prototype.update = function (dt) {
+        var keyboard = this.app.keyboard;
+        var spine = this.entity.spine;
+         if (keyboard.isPressed(pc.KEY_SPACE)) {
+          if (this.state !== "attack") {
+            spine.state.setAnimation(0, "bunny_with_gun", true);
+            this.state = "attack";
+          }
+
+        } else if (keyboard.wasPressed(pc.KEY_DOWN) || app.keyboard.isPressed(pc.KEY_S)) {
+          if (this.state !== "down") {
+            spine.state.setAnimation(1, "down", false);
+            this.state = "down";
+          }
+        } else if (keyboard.isPressed(pc.KEY_UP)|| app.keyboard.isPressed(pc.KEY_W)) {
+          if (this.state !== "up") {
+            spine.state.setAnimation(1, "jump_slow", false);
+            spine.state.setAnimation(2, "run_fast", true);
+            this.state = "up";
+          }
+
+        } else {
+          if (this.state !== "idle") {
+            spine.state.setAnimation(3, "bunny_idle", true);
+            this.state = "idle";
+            }
+          }
+        }
+
+        // Create the hero character
+        var hero = new pc.Entity();
+        hero.addComponent("spine", {
+          atlasAsset: assets[1].id,
+          skeletonAsset: assets[2].id,
+          textureAssets: [ assets[3].id ],
+          animations:['down', 'bunny_idle']
+        });
+        hero.addComponent("script");
+        hero.script.create("heroControls");
+        app.root.addChild(hero);
+        hero.translate(-5.5, 0, -2);
+        // console.log(hero.spine.state.setAnimation)
+        // console.log(hero.spine.state.skeletonData.name('down'))
+        // console.log(hero.spine.state.data.skeletonData.animations('bunny_idle'))
+        console.log(hero.spine.state.data.skeletonData.animations);
+        console.log(hero.spine.state.setAnimation)
+
+        hero.spine.state.defaultMix = 0.2;
+        hero.spine.state.data.setMix("bunny_idle", "run_fast", 0.2);
+        hero.spine.state.data.setMix("run_fast", "jump_slow", 0.2);
+        hero.spine.state.data.setMix("jump_slow", "run_fast", 0.5);
+        hero.spine.state.data.setMix("down", "bunny_idle", 0.4);
+        hero.spine.state.data.setMix("bunny_idle", "down", 0.4);
+        hero.spine.state.data.setMix("run_fast", "down", 0.4);
+        hero.spine.state.data.setMix("down", "run_fast", 0.4);
+        hero.spine.state.data.setMix("bunny_idle", "bunny_with_gun", 0.4);
+
+        hero.spine.spine.skeleton.setSkinByName("default");
+        hero.spine.spine.skeleton.setSlotsToSetupPose();
+        hero.spine.state.setAnimation(0, "bunny_idle", true);
+        hero.spine.state.data.skeletonData.animations[0];
+        // hero.spine.state.skeletonData.animations("down");
+        // hero.spine.state.setAnimation(-1, "bunny_idle", true);
+        // hero.spine.state.setAnimation(-1, "bunny_idle", true);
+        // bg.spine.state.setAnimation(0, "bg", true);
+        
+
+        document.getElementById("btn_next").addEventListener('click', function(){
+         hero.spine.state.setAnimation(0, "run_fast", true);
+         bg.spine.state.setAnimation(0, "fence_base_slow", true);
+        });
+
+        hero.spine.states[1] = new spine.AnimationState(hero.spine.spine.stateData);
+
+        var bg = new pc.Entity();
+        bg.addComponent("spine", {
+          atlasAsset: assets[4].id,
+          skeletonAsset: assets[5].id,
+          textureAssets: [ assets[6].id, assets[7].id ]
+        });
+        bg.addComponent("script");
+        bg.script.create("heroControls");
+        app.root.addChild(bg);
+
+        bg.translate(-5.5, 0, -2);
+        bg.spine.states[1] = new spine.AnimationState(hero.spine.spine.stateData);
+        bg.spine.state.setAnimation(0, "fence_base_idle", true);
+
+
+
+        // Create a camera to render the scene
+        var camera = new pc.Entity();
+        camera.addComponent("camera");
+        camera.translateLocal(4, 0,11); //left, down, scale
+        app.root.addChild(camera);
+    });
+ 
+  </script>
+</body>
+</html>

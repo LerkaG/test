@@ -1,0 +1,40 @@
+{
+  "name": "playcanvas-spine",
+  "version": "0.1.0",
+  "author": "PlayCanvas <support@playcanvas.com>",
+  "homepage": "https://playcanvas.com",
+  "description": "Spine plugin for PlayCanvas Engine",
+  "keywords": [
+    "playcanvas",
+    "spine",
+    "animation",
+    "webgl",
+    "webgl2",
+    "2d"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/playcanvas/playcanvas-spine/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playcanvas/playcanvas-spine.git"
+  },
+  "eslintConfig": {
+    "extends": "@playcanvas/eslint-config"
+  },
+  "devDependencies": {
+    "@playcanvas/eslint-config": "^1.0.3",
+    "eslint": "^6.8.0",
+    "grunt": "^1.0.4",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^4.0.1",
+    "http-server": "^0.12.0"
+  },
+  "dependencies": {},
+  "scripts": {
+    "build": "grunt",
+    "lint": "eslint src",
+    "serve": "./node_modules/.bin/http-server ./ -a localhost"
+  }
+}

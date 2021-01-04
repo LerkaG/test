@@ -1,0 +1,47 @@
+
+bg.png
+size: 1926,1504
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: false
+  xy: 3, 3
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+fence
+  rotate: false
+  xy: 100, 1086
+  size: 814, 415
+  orig: 814, 416
+  offset: 0, 1
+  index: -1
+fence_night
+  rotate: false
+  xy: 917, 1086
+  size: 814, 415
+  orig: 814, 416
+  offset: 0, 1
+  index: -1
+star
+  rotate: false
+  xy: 3, 1407
+  size: 94, 94
+  orig: 96, 96
+  offset: 1, 1
+  index: -1
+
+bg2.png
+size: 1926,1086
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg_night
+  rotate: false
+  xy: 3, 3
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
